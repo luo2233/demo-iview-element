@@ -1,51 +1,50 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png" />
     <div>
-      <p>
-        If Element is successfully added to this project, you'll see an
-        <code v-text="'<el-button>'"></code>
-        below
-      </p>
-      <el-button>el-button</el-button>
-      <Button style="background-color:#000000">iview-button</Button>
-      <!-- <Table :columns="columns7" :data="data6" border></Table> -->
-      <Table :columns="columns7" :data="data6" border ></Table>
-      <Tag color="#000000">标签</Tag>
+      <p>教学计划表综览</p>
+      <div class="head">
+        <span>入学年：2020</span>
+        <span>专业：信息管理与信息系统</span>
+        <span>学院：商学院</span>
+      </div>
+      <div class="detail">
+        <span>颜色说明：</span>
+        <Tag v-for="(detail, index) in details" :key="index" v-bind:style="setStyle(detail)">{{detail}}</Tag>
+      </div>
+      <div class="typeBtn">
+        <Button style="background-color:blue" @click="handleChangeBX">依必选修查看</Button>
+        <Button style="background-color:#000000" @click="handleChangeType">依类别查询</Button>
+      </div>
+      <Table :columns="columns7" :data="data6" :span-method="handleSpan" border ></Table>
     </div>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
 export default {
   data() {
     return {
+      detail:'',
+      details:["公共必修","通识选修","专业必修","专业选修","综合实践必修","综合实践选修","跨专业必修","通识必修"],
       // 列表头
       columns7: [
         {
           title:"类别",
           key:"courseType",
-          className:"demo",
-          minWidth:100
+          maxWidth:100
         },
         {
           title:"必选修",
           key:"BX",
-          className:"demo",
-          minWidth:100
+          maxWidth:100
         },
         {
           title: "第一学年",
           align: 'center',
-          width: 350,
           children:[
             {
             title:'一',
             key:'one',
-            width:200,
             height:"100%",
             align:"center",
             render: (h, params) => {
@@ -54,36 +53,39 @@ export default {
             if (params.row.one) {
               for (let i in params.row.one) {
                 switch (i) {
-                  case "单选题":
+                  case "公共必修":
                     tagColor = "#3083DC";
                     break;
-                  case "多选题":
+                  case "通识选修":
                     tagColor = "#42BFDD";
                     break;
-                  case "不定项选择题":
+                  case "专业必修":
                     tagColor = "#344966";
                     break;
-                  case "判断题":
+                  case "专业选修":
                     tagColor = "#CDC392";
                     break;
-                  case "填空题":
+                  case "综合实践必修":
                     tagColor = "#0077B6";
                     break;
-                  case "问答题":
+                  case "综合实践选修":
                     tagColor = "#788BFF";
                     break;
-                  case "材料题":
+                  case "跨专业必修":
                     tagColor = "#38A35A";
                     break;
-                  default:
+                  case "通识必修":
                     tagColor = "#69BB56";
+                    break;
+                  default:
+                    tagColor = "#ffffff";
                 }
                 newArray.push(
                   h(
                     "Button",
                     {
                       props: {
-                        // color: tagColor,
+                     
                       },
                       style:{
                         background: tagColor,
@@ -91,7 +93,6 @@ export default {
                     },
                     // i + ":" + params.row.name[i],
                     i
-                    // params.row.one[i]
                   )
                 );
               }
@@ -102,37 +103,35 @@ export default {
           {
             title:'二',
             key:'two',
-            width:100
-          }
-          ],
-          render: (h, params) => {
+            align: 'center',
+            render: (h, params) => {
             let newArray = [];
             let tagColor = "";
-            if (params.row.name) {
-              for (let i in params.row.name) {
+            if (params.row.two) {
+              for (let i in params.row.two) {
                 switch (i) {
-                  case "单选题":
+                  case "公共必修":
                     tagColor = "#3083DC";
                     break;
-                  case "多选题":
+                  case "通识选修":
                     tagColor = "#42BFDD";
                     break;
-                  case "不定项选择题":
+                  case "专业必修":
                     tagColor = "#344966";
                     break;
-                  case "判断题":
+                  case "专业选修":
                     tagColor = "#CDC392";
                     break;
-                  case "填空题":
+                  case "综合实践必修":
                     tagColor = "#0077B6";
                     break;
-                  case "问答题":
+                  case "综合实践选修":
                     tagColor = "#788BFF";
                     break;
-                  case "材料题":
+                  case "跨专业必修":
                     tagColor = "#38A35A";
                     break;
-                  default:
+                  case "通识必修":
                     tagColor = "#69BB56";
                 }
                 newArray.push(
@@ -152,48 +151,48 @@ export default {
                 );
               }
             }
-            return h("div", params.row.name ? newArray : "");
+            return h("div", params.row.two ? newArray : "");
           },
+          }
+          ],
+          
         },
         {
           title: "第二学年",
           align: 'center',
-          width: 350,
           children:[
             {
             title:'三',
             key:'three',
-            width:200,
-            height:"100%",
             align:"center",
             render: (h, params) => {
             let newArray = [];
             let tagColor = "";
-            if (params.row.one) {
-              for (let i in params.row.one) {
+            if (params.row.three) {
+              for (let i in params.row.three) {
                 switch (i) {
-                  case "单选题":
+                  case "公共必修":
                     tagColor = "#3083DC";
                     break;
-                  case "多选题":
+                  case "通识选修":
                     tagColor = "#42BFDD";
                     break;
-                  case "不定项选择题":
+                  case "专业必修":
                     tagColor = "#344966";
                     break;
-                  case "判断题":
+                  case "专业选修":
                     tagColor = "#CDC392";
                     break;
-                  case "填空题":
+                  case "综合实践必修":
                     tagColor = "#0077B6";
                     break;
-                  case "问答题":
+                  case "综合实践选修":
                     tagColor = "#788BFF";
                     break;
-                  case "材料题":
+                  case "跨专业必修":
                     tagColor = "#38A35A";
                     break;
-                  default:
+                  case "通识必修":
                     tagColor = "#69BB56";
                 }
                 newArray.push(
@@ -214,43 +213,41 @@ export default {
                 );
               }
             }
-            return h("div", params.row.one ? newArray : "");
+            return h("div", params.row.three ? newArray : "");
           },
           },
           {
             title:'四',
             key:'four',
-            width:100
-          }
-          ],
-          render: (h, params) => {
+            align: 'center',
+            render: (h, params) => {
             let newArray = [];
             let tagColor = "";
-            if (params.row.name) {
-              for (let i in params.row.name) {
+            if (params.row.four) {
+              for (let i in params.row.four) {
                 switch (i) {
-                  case "单选题":
+                  case "公共必修":
                     tagColor = "#3083DC";
                     break;
-                  case "多选题":
+                  case "通识选修":
                     tagColor = "#42BFDD";
                     break;
-                  case "不定项选择题":
+                  case "专业必修":
                     tagColor = "#344966";
                     break;
-                  case "判断题":
+                  case "专业选修":
                     tagColor = "#CDC392";
                     break;
-                  case "填空题":
+                  case "综合实践必修":
                     tagColor = "#0077B6";
                     break;
-                  case "问答题":
+                  case "综合实践选修":
                     tagColor = "#788BFF";
                     break;
-                  case "材料题":
+                  case "跨专业必修":
                     tagColor = "#38A35A";
                     break;
-                  default:
+                  case "通识必修":
                     tagColor = "#69BB56";
                 }
                 newArray.push(
@@ -270,48 +267,47 @@ export default {
                 );
               }
             }
-            return h("div", params.row.name ? newArray : "");
+            return h("div", params.row.four ? newArray : "");
           },
+          }
+          ],
         },
         {
           title: "第三学年",
           align: 'center',
-          width: 350,
           children:[
             {
             title:'五',
             key:'five',
-            width:200,
-            height:"100%",
             align:"center",
             render: (h, params) => {
             let newArray = [];
             let tagColor = "";
-            if (params.row.one) {
-              for (let i in params.row.one) {
+            if (params.row.five) {
+              for (let i in params.row.five) {
                 switch (i) {
-                  case "单选题":
+                  case "公共必修":
                     tagColor = "#3083DC";
                     break;
-                  case "多选题":
+                  case "通识选修":
                     tagColor = "#42BFDD";
                     break;
-                  case "不定项选择题":
+                  case "专业必修":
                     tagColor = "#344966";
                     break;
-                  case "判断题":
+                  case "专业选修":
                     tagColor = "#CDC392";
                     break;
-                  case "填空题":
+                  case "综合实践必修":
                     tagColor = "#0077B6";
                     break;
-                  case "问答题":
+                  case "综合实践选修":
                     tagColor = "#788BFF";
                     break;
-                  case "材料题":
+                  case "跨专业必修":
                     tagColor = "#38A35A";
                     break;
-                  default:
+                  case "通识必修":
                     tagColor = "#69BB56";
                 }
                 newArray.push(
@@ -332,43 +328,41 @@ export default {
                 );
               }
             }
-            return h("div", params.row.one ? newArray : "");
+            return h("div", params.row.five ? newArray : "");
           },
           },
           {
             title:'六',
             key:'six',
-            width:100
-          }
-          ],
-          render: (h, params) => {
+            align: 'center',
+            render: (h, params) => {
             let newArray = [];
             let tagColor = "";
-            if (params.row.name) {
-              for (let i in params.row.name) {
+            if (params.row.six) {
+              for (let i in params.row.six) {
                 switch (i) {
-                  case "单选题":
+                  case "公共必修":
                     tagColor = "#3083DC";
                     break;
-                  case "多选题":
+                  case "通识选修":
                     tagColor = "#42BFDD";
                     break;
-                  case "不定项选择题":
+                  case "专业必修":
                     tagColor = "#344966";
                     break;
-                  case "判断题":
+                  case "专业选修":
                     tagColor = "#CDC392";
                     break;
-                  case "填空题":
+                  case "综合实践必修":
                     tagColor = "#0077B6";
                     break;
-                  case "问答题":
+                  case "综合实践选修":
                     tagColor = "#788BFF";
                     break;
-                  case "材料题":
+                  case "跨专业必修":
                     tagColor = "#38A35A";
                     break;
-                  default:
+                  case "通识必修":
                     tagColor = "#69BB56";
                 }
                 newArray.push(
@@ -388,48 +382,47 @@ export default {
                 );
               }
             }
-            return h("div", params.row.name ? newArray : "");
+            return h("div", params.row.six ? newArray : "");
           },
+          }
+          ],
         },
         {
           title: "第四学年",
           align: 'center',
-          width: 350,
           children:[
             {
             title:'七',
             key:'seven',
-            width:200,
-            height:"100%",
             align:"center",
             render: (h, params) => {
             let newArray = [];
             let tagColor = "";
-            if (params.row.one) {
-              for (let i in params.row.one) {
+            if (params.row.seven) {
+              for (let i in params.row.seven) {
                 switch (i) {
-                  case "单选题":
+                  case "公共必修":
                     tagColor = "#3083DC";
                     break;
-                  case "多选题":
+                  case "通识选修":
                     tagColor = "#42BFDD";
                     break;
-                  case "不定项选择题":
+                  case "专业必修":
                     tagColor = "#344966";
                     break;
-                  case "判断题":
+                  case "专业选修":
                     tagColor = "#CDC392";
                     break;
-                  case "填空题":
+                  case "综合实践必修":
                     tagColor = "#0077B6";
                     break;
-                  case "问答题":
+                  case "综合实践选修":
                     tagColor = "#788BFF";
                     break;
-                  case "材料题":
+                  case "跨专业必修":
                     tagColor = "#38A35A";
                     break;
-                  default:
+                  case "通识必修":
                     tagColor = "#69BB56";
                 }
                 newArray.push(
@@ -450,43 +443,41 @@ export default {
                 );
               }
             }
-            return h("div", params.row.one ? newArray : "");
+            return h("div", params.row.seven ? newArray : "");
           },
           },
           {
             title:'八',
             key:'eight',
-            width:100
-          }
-          ],
-          render: (h, params) => {
+            align: 'center',
+            render: (h, params) => {
             let newArray = [];
             let tagColor = "";
-            if (params.row.name) {
-              for (let i in params.row.name) {
+            if (params.row.eight) {
+              for (let i in params.row.eight) {
                 switch (i) {
-                  case "单选题":
+                  case "公共必修":
                     tagColor = "#3083DC";
                     break;
-                  case "多选题":
+                  case "通识选修":
                     tagColor = "#42BFDD";
                     break;
-                  case "不定项选择题":
+                  case "专业必修":
                     tagColor = "#344966";
                     break;
-                  case "判断题":
+                  case "专业选修":
                     tagColor = "#CDC392";
                     break;
-                  case "填空题":
+                  case "综合实践必修":
                     tagColor = "#0077B6";
                     break;
-                  case "问答题":
+                  case "综合实践选修":
                     tagColor = "#788BFF";
                     break;
-                  case "材料题":
+                  case "跨专业必修":
                     tagColor = "#38A35A";
                     break;
-                  default:
+                  case "通识必修":
                     tagColor = "#69BB56";
                 }
                 newArray.push(
@@ -502,171 +493,206 @@ export default {
                     },
                     // i + ":" + params.row.name[i],
                     i
+                    // params.row.one[i]
                   )
                 );
               }
             }
-            return h("div", params.row.name ? newArray : "");
+            return h("div", params.row.eight ? newArray : "");
           },
+          }
+          ],
         }, 
-        // {
-        //   title: "Name",
-        //   key: "name",
-        // },
-        // {
-        //   title: "Age",
-        //   key: "age",
-        // },
-        // {
-        //   title: "Address",
-        //   key: "address",
-        // },
-        // {
-        //   title: "Action",
-        //   key: "action",
-        //   width: 250,
-        //   align: "center",
-        //   render: (h, params) => {
-        //     return h("div", [
-        //       h(
-        //         "Button",
-        //         {
-        //           props: {
-        //             type: "primary",
-        //             size: "small",
-        //           },
-        //           style: {
-        //             marginRight: "5px",
-        //           },
-        //           on: {
-        //             click: () => {
-        //               this.show(params.index);
-        //             },
-        //           },
-        //         },
-        //         "查看"
-        //       ),
-        //       h(
-        //         "Button",
-        //         {
-        //           props: {
-        //             type: "",
-        //             size: "small",
-        //           },
-        //           style: {
-        //             color: "#ffffff",
-        //             background: "#000000",
-        //           },
-        //           on: {
-        //             click: () => {
-        //               this.remove(params.index);
-        //             },
-        //           },
-        //         },
-        //         params.row.name
-        //       ),
-        //       h(
-        //         "Button",
-        //         {
-        //           props: {
-        //             type: "error",
-        //             size: "small",
-        //           },
-        //           on: {
-        //             click: () => {
-        //               this.remove(params.index);
-        //             },
-        //           },
-        //         },
-        //         "增加"
-        //       ),
-        //     ]);
-        //   },
-        // },
       ],
 
       data6: [
         {
           courseType:"公共课程",
           BX:"必修",
-          one:{"单选题":"1","多选题":"2","不定项选择题":"3","判断题":"4","填空题":"5","问答题":"6","材料题":"7"},
-          2:"2",
-          3:"3",
-          4:"4",
-          5:"5",
-          6:"6",
-          7:"7",
-          8:"8"
-                  },
+          one:{"公共必修":"1","通识必修":"2","专业必修":"4","综合实践必修":"6","跨专业必修":"8"},
+          two:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          three:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          four:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          five:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          six:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          seven :{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          eight:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+        },
+        {
+          courseType:"公共课程",
+          BX:"选修",
+          one:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          two:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          three:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          four:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          five:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          six:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          seven :{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          eight:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+        },
         {
           courseType: "通识教育课程",
-          one:{"单选题":"1","多选题":"2","不定项选择题":"3","判断题":"4","填空题":"5","问答题":"6","材料题":"7"},
-          2:"2",
-          3:"3",
-          4:"4",
-          5:"5",
-          6:"6",
-          7:"7",
-          8:"8"
+          BX:"必修",
+          one:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          two:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          three:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          four:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          five:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          six:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          seven :{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          eight:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+        },
+        {
+          courseType: "通识教育课程",
+          one:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          two:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          three:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          four:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          five:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          six:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          seven :{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          eight:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
         },
         {
           courseType: "学科专业课程",
-          one:{"单选题":"1","多选题":"2","不定项选择题":"3","判断题":"4","填空题":"5","问答题":"6","材料题":"7"},
-          2:"2",
-          3:"3",
-          4:"4",
-          5:"5",
-          6:"6",
-          7:"7",
-          8:"8"
+          BX:"必修",
+          one:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          two:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          three:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          four:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          five:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          six:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          seven :{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          eight:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+        },
+        {
+          courseType: "学科专业课程",
+          BX:"选修",
+          one:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          two:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          three:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          four:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          five:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          six:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          seven :{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          eight:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
         },
         {
           courseType: "综合实践课程",
-          age: 26,
-          address: "上海市",
-          city: "陆家港",
-          disrect: "上海东方明珠立交桥",
+          BX:"必修",
+          one:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          two:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          three:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          four:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          five:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          six:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          seven :{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          eight:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+        },
+        {
+          courseType: "综合实践课程",
+          BX:"选修",
+          one:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          two:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          three:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          four:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          five:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          six:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          seven :{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          eight:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
         },
         {
           courseType: "跨专业课程",
-          age: 26,
-          address: "上海市",
-          city: "陆家港",
-          disrect: "上海东方明珠立交桥",
-        }
+          BX:"必修",
+          one:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          two:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          three:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          four:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          five:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          six:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          seven :{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          eight:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+        },
+        {
+          courseType: "跨专业课程",
+          BX:"选修",
+          one:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          two:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          three:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          four:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          five:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          six:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          seven :{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+          eight:{"公共必修":"1","通识必修":"2","通识选修":"3","专业必修":"4","专业选修":"5","综合实践必修":"6","综合实践选修":"7","跨专业必修":"8"},
+        },
       ],
     };
   },
   methods: {
-    show(index) {
-      this.$Modal.info({
-        title: "User Info",
-        content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`,
-      });
+    handleSpan({ rowIndex, columnIndex}) {
+      let i = [0,2,4,6,8]
+      for(let a = 0; a<i.length; a++){
+        if(rowIndex === i[a] && columnIndex === 0) {
+        //分别代表合并的行数和列数
+        return [2,1];
+      }
+        else if (rowIndex === i[a]+1 && columnIndex === 0) {
+        //分别代表合并的行数和列数，设为0则直接不显示
+        return [0,0];
+      }
+      }
     },
-    remove(index) {
-      this.data6.splice(index, 1);
-    },
-  },
-  name: "app",
-  components: {
-    HelloWorld,
+
+    setStyle(str){
+      if(str == "公共必修"){
+        return "background:#3083DC"
+      }
+      else if(str == "通识选修"){
+        return "background:#42BFDD"
+      }
+      else if(str == "专业必修"){
+        return "background:#344966"
+      }
+      else if(str == "专业选修"){
+        return "background:#CDC392"
+      }
+      else if(str == "综合实践必修"){
+        return "background:#0077B6"
+      }
+      else if(str == "综合实践选修"){
+        return "background:#788BFF"
+      }
+      else if(str == "跨专业必修"){
+        return "background:#38A35A"
+      }
+      else if(str == "通识必修"){
+        return "background:#69BB56"
+      }
+    }
   },
 };
 </script>
 
-<style>
+<style scope>
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.head span{
+  margin-left: 30px;
+}
+.detail .ivu-tag .ivu-tag-text{
+  color: #ffffff;
 }
 .ivu-table-wrapper{
   position: relative;
   width: 100%;
-  /* left: 10%; */
- }
+
+}
+.ivu-btn span{
+  color: aliceblue;
+}
 </style>
