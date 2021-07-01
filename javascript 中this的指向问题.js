@@ -55,5 +55,80 @@ showcallee();
    //返回值，使用调用者提供的this值和参数调用该函数的返回值。若该方法没用返回值，则返回undefined
 
    //方法调用，指用对象来调用其方法函数，调用形式为对象.方法函数（...），这种情况下，函数中的this指向调用该方法的对象，但同时要注意bind()的影响
+   //第一种方式，定义对象的时候定义方法
+   // eslint-disable-next-line no-redeclare
+   const obj = {
+       test(){
+           console.log(this === obj);
+       }
+   };
+
+   //第二种方式，对象定义好之后为其附加一个方法（函数表达式）
+   obj.test2 =function () {
+       console.log(this === obj);
+   };
+
+   //第三种方式，与第二种方式原理相同，对象定义好之后为其附加一个方法（函数定义）
+   function t(){
+       console.log(this ===obj);
+   }
+   obj.test3 = t
+
+   //第四种方式，这也是为对象附加一个方法函数，但是这个函数绑定了一个不是obj的其他对象
+   obj.test4 = (function(){
+       console.log(this === obj);
+   }).bind({})
+
+   obj.test();
+   obj.test2();
+   obj.test3();
+   obj.test4();// 受bind()影响，test4()中this 的指向不是obj
+
+   //方法中this指向全局对象的情况，注意此处为方法中，而非方法调用中，例如
+   // eslint-disable-next-line no-redeclare
+   const obj = {
+       test (){
+           console.log(this === obj);
+       }
+   };
+   //p为对象obj的test方法，但是p()调用时，其中的this指向了全局
+   const p = obj.test 
+   p();
+
+   //new调用，在es5中，用new调用一个构造函数，会创建一个新对象，而其中的this就指向这个新对象
+   /*es6中，用class定义的类不能像普通函数一样调用，同样的class中定义的方法函数，也不能当作构造函数用new来调用 */
+   var data = "hi"
+
+   function AClass(data){
+       this.data = data
+   }
+
+   var a = new AClass("hello world")
+   console.log(a.data);
+   console.log(data);
+   var b = new AClass("hellow orld")
+   console.log(a === b);
+
+   //箭头函数中的this指向，箭头函数没用自己的this绑定，箭头函数中使用的this，其实是直接包含它的那个函数或函数表达式中的this
+   //箭头函数不能用new调用，不能bind()到某个对象，不管在什么情况下使用箭头函数，它本身是没有绑定this的，它用的是直接外层函数（即包含它的最近的一层函数或函数表达式）绑定的this
+   // eslint-disable-next-line no-redeclare
+   const obj = {
+       test(){
+           //这里的this是test()中this，this的指向问题由test()的调用方式决定
+           const arrow =() => {
+               console.log(this === obj);
+           };
+           arrow();
+   },
+   getArrow () {
+       return () => {
+           //这里的this是getArrow()中的this，this的指向问题由getArrow()的调用方式决定的
+           console.log(this === obj);
+       }
+   }
+   }
+   obj.test()
+   const arrow = obj.getArrow;
+   arrow();
 
    
